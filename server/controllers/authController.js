@@ -36,13 +36,13 @@ const loginUser = async (req, res) => {
 };
 
 const signupUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
-    if (!email || !password) {
+    if (!name || !email || !password) {
       return res
         .status(400)
-        .json({ mssg: "Both Email & password are required" });
+        .json({ mssg: "All fields are required" });
     }
 
     if (!validator.isEmail(email)) {
@@ -61,7 +61,7 @@ const signupUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await authModel.create({ email, password: hashedPassword });
+    const newUser = await authModel.create({ name, email, password: hashedPassword });
     return res.json({ mssg: "User Registered Succesfully ", newUser });
   } catch (error) {
     return res.status(400).json({ error });
