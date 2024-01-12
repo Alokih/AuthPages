@@ -28,6 +28,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.SECRET, {
       expiresIn: "2d",
     });
+    res.cookie('token', token);
 
     return res.status(200).json({ email, token });
   } catch (error) {

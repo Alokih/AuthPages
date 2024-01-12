@@ -3,19 +3,28 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
 
     e.preventDefault();
 
     axios.post('http://localhost:8001/register', {name, email, password})
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
+    .then(res => {
+      alert('Registered Successfully !')
+      console.log(res);
+      navigate('/login');
+    })
+    .catch(err => {
+      alert('Please, Enter all fields correctly !');
+      console.log(err);
+    })
   }
 
   return (

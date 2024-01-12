@@ -3,20 +3,29 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true
   const handleSubmit = (e) => {
 
     e.preventDefault();
 
     axios.post('http://localhost:8001/login', {email, password})
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
+    .then(res => {
+      navigate('/home')
+      console.log(res)
+    })
+    .catch(err => {
+      alert('Please, Enter all fields correctly !')
+      console.log(err)
+    })
   }
 
 
@@ -57,9 +66,9 @@ const Login = () => {
             Login
           </button>
         </form>
-        <p>Already Have an Account</p>
-        <Link to="/login" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none ">
-          Login
+        <p>Don't Have an Account</p>
+        <Link to="/register" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none ">
+          Register
         </Link>
       </div>
     </div>
