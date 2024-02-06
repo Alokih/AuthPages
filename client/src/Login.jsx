@@ -1,33 +1,32 @@
-import React from "react"
+import React from "react";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 const Login = () => {
-
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
-  axios.defaults.withCredentials = true
+  axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
-
     e.preventDefault();
 
-    axios.post('http://localhost:8001/login', {email, password})
-    .then(res => {
-      navigate('/home')
-      console.log(res)
-    })
-    .catch(err => {
-      alert('Please, Enter all fields correctly !')
-      console.log(err)
-    })
-  }
-
+    axios
+      .post("http://localhost:8001/login", { email, password })
+      .then((res) => {
+        const userID = res.data.userID;
+        localStorage.setItem("userId", userID);
+        navigate("/");
+        console.log(res);
+      })
+      .catch((err) => {
+        alert("Please, Enter all fields correctly !");
+        console.log(err);
+      });
+  };
 
   return (
     <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
@@ -36,7 +35,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="email">
-              <strong>Name</strong>
+              <strong>Email</strong>
             </label>
             <input
               type="email"
@@ -66,13 +65,19 @@ const Login = () => {
             Login
           </button>
         </form>
-        <p>Don't Have an Account</p>
-        <Link to="/register" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none ">
+        <p>
+          Don't Have an Account
+        </p>
+
+        <Link
+          to="/register"
+          className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none "
+        >
           Register
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
