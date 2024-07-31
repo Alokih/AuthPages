@@ -25,7 +25,7 @@ mongoose
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log(
-        `MongDB connected & server started at PORT: ${process.env.PORT}`
+        `MongoDB connected & server started at PORT: ${process.env.PORT}`
       );
     });
   })
